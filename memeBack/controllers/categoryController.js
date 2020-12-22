@@ -2,7 +2,7 @@ const Category = require("../models/Category");
 const Item = require("../models/Item");
 const { validationResult } = require("express-validator");
 
-exports.createCategory = async (req, res) => {
+exports.create = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });

@@ -14,10 +14,10 @@ const ItemSchema = mongoose.Schema({
     required: true,
     trim: true
       },
-  itemCommentary: {
+  itemCommentary: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Commentary"
-  }
+  }]
 });
 
 const Item = mongoose.model("Item", ItemSchema);

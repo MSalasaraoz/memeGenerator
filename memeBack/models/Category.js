@@ -6,10 +6,10 @@ const CategorySchema = mongoose.Schema({
         required: true,
         trim: true
     },
-    owner: {
+    owner: [{
         type: mongoose.Schema.Types.ObjectId,
         ref : "Item"
-    }
+    }]
 });
 
-module.exports = mongoose.model('Commentary', CategorySchema);
+module.exports = mongoose.model('Category', CategorySchema);
