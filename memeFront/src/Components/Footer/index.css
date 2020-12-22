@@ -1,10 +1,6 @@
-.navbar-custom {
+.container-footer {
+    margin-top: 448px;
     background: rgb(0, 112, 144);
     background: linear-gradient(180deg, rgba(0, 112, 144, 1) 0%, rgba(0, 45, 91, 1) 72%);
-    color: white;
-    font-family: 'Roboto', sans-serif;
-}
-
-.position-left{
-    margin-left: -50px;
+    color: rgb(234, 235, 237);
 }
