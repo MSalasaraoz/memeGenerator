@@ -1,0 +1,9 @@
+.avatar{
+    width: 250px;
+    height: 250px;
+}
+
+.cardAvatar{
+    text-align: center;
+    justify-content: center;
+}

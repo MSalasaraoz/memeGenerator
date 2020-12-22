@@ -1,35 +1,24 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const morgan = require("morgan")
+const morgan = require('morgan');
+const cors = require('cors');
 //linkeamos el dotenv
-const dotenv = require("dotenv");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+const dotenv = require('dotenv');
 dotenv.config();
+//manejo de base datos
 const mongoose = require('./database');
-
-//creacion del puerto 
+//creacion del puerto
 const port = process.env.port || 4000;
-// middleware morgan
+// middlewares
 app.use(morgan('dev'));
+//ruta
+app.use('/api', require('./routes'));
+app.use(cors());
 
-app.use('/api',require('./routes'));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
-// const item = {
-//     itemId : "2",
-//     itemName : "nombre",
-//     itemLink: "link",
-//     itemCategory : "categoria",
-//     itemComentary : "comentario" 
-//     } 
 
-//  const category = {
-//      catId : "1",    
-//      catCategory : "categoria"
-// } 
-
-//  const commentary = {
-//     commentaryId : "",
-//     commentaryUser : "" 
-//  } 
