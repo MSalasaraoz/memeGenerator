@@ -1,7 +1,8 @@
 const Commentary = require("../models/Commentary");
+const Item = require("../models/Item");
 const { validationResult } = require("express-validator");
 
-const commentaryCtrl = {};
+/*
 
 commentaryCtrl.createCommentary = async (req, res) => {
   const errors = validationResult(req);
@@ -176,3 +177,4 @@ commentaryCtrl.recoverCommentaryDeleted = (req, res) => {
 };
 
 module.exports = commentaryCtrl;
+*/

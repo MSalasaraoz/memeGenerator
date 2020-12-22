@@ -1,34 +1,32 @@
-const Category = require("../models/Categories");
+const Category = require("../models/Category");
+const Item = require("../models/Item");
 const { validationResult } = require("express-validator");
 
-const categoryCtrl = {};
-
-categoryCtrl.createCategory = async (req, res) => {
+exports.createCategory = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
-  const { catCategory} = req.body;
+  const {name} = req.body;
   try {
-    let newCategory = await Category.findOne({ categoryName });
+    let newCategory = await Category.findOne({ name });
     if (newCategory) {
-      return res.status(400).json({ msg: "Este MEME ya existe" });
+      return res.status(400).json({ msg: "Esta Categoria ya existe!" });
     }
     newCategory = new Category(req.body);
-
     await newCategory.save();
     res.status(201).json({
-      msg: "Meme subido correctamente",
+      msg: "Categoria creada correctamente",
     });
   } catch (error) {
     console.log(error);
     res.status(400).json({
-      msg: "Hubo un error al subir el meme",
+      msg: "Hubo un error al crea la categoria",
     });
   }
 };
 
+/*
 categoryCtrl.getCategorys = async (req, res) => {
   await Category.find({}, function (err, categorys) {
     if (!err) {
@@ -168,5 +166,4 @@ categoryCtrl.recoverCategoryDeleted = (req, res) => {
       });
     });
 };
-
-module.exports = categoryCtrl;
+*/

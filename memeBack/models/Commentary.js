@@ -6,8 +6,9 @@ const CommentarySchema = mongoose.Schema({
         required: true,
         trim: true
     },
-    itemId: {
-        type: Number
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : "Item"
     }
 });
 

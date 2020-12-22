@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 //Esquema
 const CategorySchema = mongoose.Schema({
-    Category: {
+    name: {
         type: String,
         required: true,
         trim: true
     },
-    itemId: {
-        type: Number
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : "Item"
     }
 });
 
