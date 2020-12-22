@@ -1,26 +1,25 @@
 import React, {useState} from 'react';
 
-const Formulario = () => {
-
+    const Formulario = () => {
 
     const [datos, setDatos] = useState({
-        nombre: '',
-        apellido: ''
+        nombre: ''
     })
 
     const handleInputChange = (event) => {
-        // console.log(event.target.name)
-        // console.log(event.target.value)
         setDatos({
             ...datos,
             [event.target.name] : event.target.value
         })
+        //  console.log(event.target.name)
+        //  console.log(event.target.value)
+        
     }
 
     const enviarDatos = (event) => {
         event.preventDefault()
-        console.log('enviando datos...' + datos.nombre + ' ' + datos.apellido)
-    }
+         console.log('enviando datos...' + datos.nombre)
+     }
 
     return (
         <>
@@ -36,10 +35,11 @@ const Formulario = () => {
                 </div>
                 
             </form>
-            {/* <ul>
-                <li>{datos.nombre}</li>
-                <li>{datos.apellido}</li>
-            </ul> */}
+            <ul>
+                <li>
+                    {datos.nombre}
+                </li>
+            </ul>
             </div>
         </>
     );
