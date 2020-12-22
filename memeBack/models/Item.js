@@ -10,10 +10,9 @@ const ItemSchema = mongoose.Schema({
     type: String
   },
   itemCategory: {
-    type: String,
-    required: true,
-    trim: true
-      },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category"
+  },
   itemCommentary: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Commentary"

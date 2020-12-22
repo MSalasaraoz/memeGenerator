@@ -6,7 +6,7 @@ exports.createItem = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  const { itemName, itemLink, itemCategory, itemCommentary } = req.body;
+  const { itemName, itemLink, itemCategory, itemCommentary, owner } = req.body;
   try {
     //buscamos si existe un item o meme anterior
     let item = await Item.findOne({ itemName });
@@ -17,6 +17,8 @@ exports.createItem = async (req, res) => {
     console.log(item);
     // guardamos el meme en la bd
     await item.save();
+    // const category = await Category.findById(owner);
+    // revistar esta linea category.items.push(item)
     res.status(201).json({
       msg: "Meme creado correctamente!!!",
     });
@@ -28,23 +30,18 @@ exports.createItem = async (req, res) => {
   }
 };
 
-// mostrar items por categoria
-exports.index = async (req, resp) => {
+// mostrar items 
+exports.index = async (req, res) => {
   await Item.find({}, function (err, items) {
     if (!err) {
       if (items.length != 0) {
-        const arrayItems = [];
-        items.forEach((eachItem) => {
-          let item = {
-            id: eachItem.id,
-            itemLink: eachItem.itemLink,
-            itemCommentary: eachItem.itemCommentary,
-            itemCategory: eachItem.itemCategory,
-          };
+        console.log(items);
+        res.status(200).send(items);
+      } else {
+        res.status(400).json({
+          msg: "No existen memes",
         });
       }
-      console.log(items);
-      res.status(200).send(items);
     } else {
       console.log(err);
     }
@@ -71,12 +68,10 @@ exports.deleteItem = (req, res) => {
   Item.findByIdAndRemove(id)
     .then((data) => {
       if (!data) {
-        res
-          .status(404)
-          .send({
-            message:
-              "No se pudo eliminar el Meme" + id + "porque no fue encontrado.",
-          });
+        res.status(404).send({
+          message:
+            "No se pudo eliminar el Meme " + id + " porque no fue encontrado.",
+        });
       } else {
         res.send({ message: "Meme eliminado correctamente" });
       }
@@ -88,10 +83,10 @@ exports.deleteItem = (req, res) => {
 
 exports.deleteAllItems = (req, res) => {
   Item.deleteMany({})
-    .then((data) => {
-      res.send({ message: "Memes eliminados!!!" + data.deleteCount });
+      .then((data) => {
+      res.send({ message: "Memes eliminados!!! " + data.deleteCount });
     })
     .catch((err) => {
-      res.status(500).send({ message: "Error al intentar eliminar" });
+      res.status(500).send({ message: "Error al intentar eliminar el meme" });
     });
 };

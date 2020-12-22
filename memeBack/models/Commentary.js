@@ -12,4 +12,5 @@ const CommentarySchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Commentary', CommentarySchema);
+const Commentary = mongoose.model("Commentary", CommentarySchema);
+module.exports = Commentary;
