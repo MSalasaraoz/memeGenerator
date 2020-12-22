@@ -1,0 +1,10 @@
+.navbar-custom {
+    background: rgb(126,127,154);
+    background: linear-gradient(0deg, rgba(126,127,154,1) 67%, rgba(151,167,179,1) 100%);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.position-left{
+    margin-left: -50px;
+}
