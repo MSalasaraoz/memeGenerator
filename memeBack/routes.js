@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const itemController = require('./controllers/itemController');
+const categoryController = require('./controllers/categoryController');
+const commentaryController = require('./controllers/commentaryController');
 // rutas a los items
-router.post("/items/", (req, res) => {
-  console.log("Creando item....");
-  res.send("Hola soy el nuevo item");
-});
-
+router.post("/items/", itemController.createItem);
 
 // app.get("/", (req, res) => {
 //     res.send("<h1> Hello World!</h1>");
@@ -43,5 +42,3 @@ router.post("/items/", (req, res) => {
 //    });
   
 module.exports = router;
-
-

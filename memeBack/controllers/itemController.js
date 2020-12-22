@@ -16,7 +16,6 @@ itemCtrl.createItem = async (req, res) => {
       return res.status(400).json({ msg: "Este MEME ya existe" });
     }
     newItem = new Item(req.body);
-
     await newItem.save();
     res.status(201).json({
       msg: "Meme subido correctamente",
