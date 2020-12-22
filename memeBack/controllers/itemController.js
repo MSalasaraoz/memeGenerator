@@ -58,14 +58,15 @@ exports.findOneItem = (req,res) => {
         .then(data=> {
          if(!data) {
          res.status(404).send({message:"Meme no encontrado por Id" + id});
-    }else {
-      res.send(data);
-    }
-  })
-  .catch(err => {
-    res.status(500).send({message: "Error" + err});
-  }
-}
+         }else 
+         {
+          res.send(data);
+        }
+       })
+       .catch(err => {
+        res.status(500).send({message: "Error" + err});
+       })
+ }
 
 exports.deleteItem = (req,res) => {
     const id = req.params.id;

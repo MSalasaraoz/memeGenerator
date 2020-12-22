@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const {check} = require('express-validator');
-const itemController = require('./controllers/itemController');
-const categoryController = require('./controllers/categoryController');
-const commentaryController = require('./controllers/commentaryController');
+
+const itemController = require('../controllers/itemController');
+const categoryController = require('../controllers/categoryController');
+const commentaryController = require('../controllers/commentaryController');
 // rutas a los items
 router.post("/items/",
     [
