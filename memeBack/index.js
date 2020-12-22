@@ -10,7 +10,7 @@ const mongoose = require("./database");
 const port = process.env.port || 4000;
 // middleware morgan
 app.use(morgan("dev"));
-
+app.use(cors());
 app.use("/api", require("./routes"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

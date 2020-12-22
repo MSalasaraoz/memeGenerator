@@ -8,7 +8,7 @@ exports.createItem = async (req, res) => {
   }
   const { itemName, itemLink, itemCategory, itemCommentary } = req.body;
   try{
-  //buscamos si existe un item/meme anterior
+  //buscamos si existe un item o meme anterior
   let item = await Item.findOne({ itemName });
   if (item) {
     return res.status(400).json({ msg: "El Meme ya existe" });
@@ -29,7 +29,6 @@ exports.createItem = async (req, res) => {
 }
 
 /* mostrar items por categoria 
-
 exports.index = async (req, resp) => {
   await Item.find({}, function (err, items) {
     if (!err) {
