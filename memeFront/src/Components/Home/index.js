@@ -7,6 +7,7 @@ function Home(){
     return(
         <>
  <NavBar/>
+ <span><br></br> <br></br></span>
  <Category/>
         </>
     );

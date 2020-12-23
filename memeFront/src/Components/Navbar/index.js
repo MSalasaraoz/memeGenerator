@@ -11,6 +11,7 @@ function NavBar(){
     <nav className="navbar navbar-custom navbar-expand-lg navbar-dark ">
         <nav className="navbar ">
         </nav>
+        <h2>MemeGenerator</h2>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
         </button>
