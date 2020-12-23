@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import Formulario from '../Forms/CategoriesForm';
 import NavBar from '../Navbar';
+import Category from '../Categories';
 
 function Home(){
     const [datos,setDatos] = useState({});
     return(
         <>
  <NavBar/>
+ <Category/>
         </>
     );
 }
