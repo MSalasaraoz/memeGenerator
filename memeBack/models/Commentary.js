@@ -6,9 +6,11 @@ const CommentarySchema = mongoose.Schema({
         required: true,
         trim: true
     },
-    itemId: {
-        type: Number
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref : "Item"
     }
 });
 
-module.exports = mongoose.model('Commentary', CommentarySchema);
+const Commentary = mongoose.model("Commentary", CommentarySchema);
+module.exports = Commentary;

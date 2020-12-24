@@ -3,6 +3,9 @@ import {Button, Modal} from 'react-bootstrap';
 import Formulario from '../../Forms/CategoriesForm';
 
 function MyVerticallyCenteredModal(props) {
+
+
+
     return (        
       <Modal
         {...props}

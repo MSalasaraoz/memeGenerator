@@ -1,55 +1,45 @@
-const Item = require('../models/Items');
+const Item = require("../models/Item");
 const { validationResult } = require("express-validator");
 
-const itemCtrl = {};
-
-itemCtrl.createItem = async (req, res) => {
+exports.createItem = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
-  const { itemName, itemLink, itemCategory, itemCommentary } = req.body;
+  const { itemName, itemLink, itemCategory, itemCommentary, owner } = req.body;
   try {
-    let newItem = await Item.findOne({ itemName });
-    if (newItem) {
-      return res.status(400).json({ msg: "Este MEME ya existe" });
+    //buscamos si existe un item o meme anterior
+    let item = await Item.findOne({ itemName });
+    if (item) {
+      return res.status(400).json({ msg: "El Meme ya existe" });
     }
-    newItem = new Item(req.body);
-    await newItem.save();
+    item = new Item(req.body);
+    console.log(item);
+    // guardamos el meme en la bd
+    await item.save();
+    // const category = await Category.findById(owner);
+    // revistar esta linea category.items.push(item)
     res.status(201).json({
-      msg: "Meme subido correctamente",
+      msg: "Meme creado correctamente!!!",
     });
   } catch (error) {
     console.log(error);
     res.status(400).json({
-      msg: "Hubo un error al subir el meme",
+      msg: "Hubo un error al intentar crear el meme",
     });
   }
 };
 
-itemCtrl.getItems = async (req, res) => {
+// mostrar items 
+exports.index = async (req, res) => {
   await Item.find({}, function (err, items) {
     if (!err) {
       if (items.length != 0) {
-        const arrayItems = [];
-        items.forEach((eachitem) => {
-          let item = {
-            id: eachItem.id,
-            itemName: eachItem.itemName,
-            itemLink: eachItem.link,
-            itemCategory: eachItem.itemCategory,
-            itemCommentary: eachItem.itemCommentary,
-            ItemDeleted: eachItem.itemDeleted,
-          };
-          if (!item.itemDeleted) {
-            arrayItems.push(item);
-          }
-        });
-        res.status(200).send(arrayItems);
+        console.log(items);
+        res.status(200).send(items);
       } else {
         res.status(400).json({
-          msg: "No existen Memes",
+          msg: "No existen memes",
         });
       }
     } else {
@@ -58,120 +48,45 @@ itemCtrl.getItems = async (req, res) => {
   });
 };
 
-itemCtrl.getItem = (req, res) => {
+exports.findOneItem = (req, res) => {
   const id = req.params.id;
   Item.findById(id)
     .then((data) => {
-      console.log(data);
-      if (!data || data.itemDeleted != false) {
-        res.status(404).send({ msg: "No se encontró el Meme con el ID " + id });
+      if (!data) {
+        res.status(404).send({ message: "Meme no encontrado por Id" + id });
       } else {
-        res.status(200).send(data);
+        res.send(data);
       }
     })
     .catch((err) => {
-      res.status(500).send({
-        msg: "Error " + err,
-      });
+      res.status(500).send({ message: "Error" + err });
     });
 };
 
-itemCtrl.deleteItem = (req, res) => {
+exports.deleteItem = (req, res) => {
   const id = req.params.id;
-  req.body = { itemDeleted: true };
-
-  Item.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Item.findByIdAndRemove(id)
     .then((data) => {
       if (!data) {
         res.status(404).send({
-          msg: "No se pudo borrar el Meme con el ID " + id,
+          message:
+            "No se pudo eliminar el Meme " + id + " porque no fue encontrado.",
         });
       } else {
-        res.status(200).send({
-          msg: "Meme eliminado exitosamente",
-        });
+        res.send({ message: "Meme eliminado correctamente" });
       }
     })
     .catch((err) => {
-      res.status(500).send({
-        msg: "error" + err,
-      });
+      res.status(500).send({ message: "Error" + err });
     });
 };
 
-// ------------------------------------------------------------------------
-
-itemCtrl.getItemsDeleted = async (req, res) => {
-  await Item.find({}, function (err, Items) {
-    if (!err) {
-      if (Items.length != 0) {
-        const arrayItemsDeleted = [];
-        items.forEach((eachItem) => {
-          let item = {
-            id: eachItem.id,
-            itemName: eachItem.itemName,
-            itemLink: eachItem.link,
-            itemCategory: eachItem.itemCategory,
-            itemCommentary: eachItem.itemCommentary,
-            itemDeleted: eachItem.itemDeleted,
-          };
-          if (item.itemDeleted) {
-            arrayItemsDeleted.push(item);
-          }
-        });
-        res.status(200).send(arrayItemsDeleted);
-      } else {
-        res.status(400).json({
-          msg: "No existen Memes borradas",
-        });
-      }
-    } else {
-      console.log(err);
-    }
-  });
-};
-
-itemCtrl.getItemDeleted = (req, res) => {
-  const id = req.params.id;
-  Item.findById(id)
-    .then((data) => {
-      console.log(data);
-      if (!data || data.itemDeleted != true) {
-        res
-          .status(404)
-          .send({ msg: "No se encontró el Meme con el ID " + id });
-      } else {
-        res.status(200).send(data);
-      }
+exports.deleteAllItems = (req, res) => {
+  Item.deleteMany({})
+      .then((data) => {
+      res.send({ message: "Memes eliminados!!! " + data.deleteCount });
     })
     .catch((err) => {
-      res.status(500).send({
-        msg: "Error " + err,
-      });
+      res.status(500).send({ message: "Error al intentar eliminar el meme" });
     });
 };
-
-itemCtrl.recoverItemDeleted = (req, res) => {
-  const id = req.params.id;
-  req.body = { itemDeleted: false };
-
-  Item.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          msg: "No se pudo recuperar la Meme con el ID " + id,
-        });
-      } else {
-        res.status(200).send({
-          msg: "Meme recuperada exitosamente",
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        msg: "error" + err,
-      });
-    });
-};
-
-module.exports = itemCtrl;

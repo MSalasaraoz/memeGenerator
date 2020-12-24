@@ -1,14 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 //Esquema
 const ItemSchema = mongoose.Schema({
-    itemId: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    itemId: {
-        type: Number
-    }
+  itemName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  itemLink: {
+    type: String
+  },
+  itemCategory: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category"
+  },
+  itemCommentary: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Commentary"
+  }]
 });
 
-module.exports = mongoose.model('Commentary', ItemSchema);
+const Item = mongoose.model("Item", ItemSchema);
+module.exports = Item;
