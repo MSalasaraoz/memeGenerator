@@ -5,7 +5,7 @@ import MyVerticallyCenteredModal from './Components/Categories/Modal';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import Cards from './Components/Tarjetas/Cards';
-import CardCategoria from './Components/Tarjetas/CardCategoria';
+import CardCategoria from './Components/Cards/CardCategoria';
 //import Home from './Components/Home';
 //import Item from './Components/Items';
 import Footer from './Components/Footer';
