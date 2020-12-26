@@ -3,7 +3,7 @@ import React, {useState} from 'react';
     const Formulario = () => {
 
     const [datos, setDatos] = useState({
-        nombre: ''
+        name: ''
     })
 
     const handleInputChange = (event) => {
@@ -18,8 +18,23 @@ import React, {useState} from 'react';
 
     const enviarDatos = (event) => {
         event.preventDefault()
-         console.log('enviando datos...' + datos.nombre)
+         console.log('enviando datos...' + datos.name)
+         saveCategory();
+         alert('Categoria creada');
      }
+
+     const saveCategory = () =>{
+        fetch('https://proyecto-extra-rolling.herokuapp.com/api/category/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify(datos),
+      })
+      .then((res) => res.json())
+      .then((result) => console.log(result))
+      .catch((err) => console.log('error'))
+      };
 
     return (
         <>
@@ -27,7 +42,7 @@ import React, {useState} from 'react';
             <form className="" onSubmit={enviarDatos}>
                 <div className="row-md-3">
                     <label>Nombre de la categoria</label>
-                    <input type="text" placeholder="" className="form-control" onChange={handleInputChange} name="nombre"></input>
+                    <input type="text" placeholder="" className="form-control" onChange={handleInputChange} name="name"></input>
                 </div>
                 <br></br>
                 <div className="row-md-3">
@@ -37,7 +52,7 @@ import React, {useState} from 'react';
             </form>
             <ul>
                 <li>
-                    {datos.nombre}
+                    {datos.name}
                 </li>
             </ul>
             </div>
