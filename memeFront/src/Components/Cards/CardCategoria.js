@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Cards from '../Tarjetas/Cards';
 
-const CardCategoria = () => {
+const CardCategoria = (props) => {
     const [categoria, setCategoria] = useState([]);
+    const [meme, setMeme] = useState([]);
     const [hasError, setErrors] = useState(false);
 
     async function fetchData() {
@@ -22,23 +24,24 @@ const CardCategoria = () => {
         fetchData();
     }, []);
 
+    
+
     return (
         <Container>
-            <Row>{
-                categoria.map(item => (
-                    <Col key={item._id}>
-                        <Card style={{ width: "18rem" }}>
-                                <Card.Body>
-                                    <Card.Title className="text-dark">{item.name}</Card.Title>
-                                    
-                                </Card.Body>
-                           
-                        </Card>
-                    </Col>
-                
+            <div>
+               <h3>{meme.itemCategory}</h3> 
+                {categoria.map(item => (
+                   
+                        <ul key={item._id}>
+                             
+                        <h3>{item.name}</h3>  
+                        if ({item._id}=={item.itemCategory}) {
+                           <Cards />  
+                        }
+                        </ul>
                 ))
-                }
-            </Row>
+                }               
+            </div>
         </Container>
     );
 };

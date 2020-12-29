@@ -1,29 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Cards = ({ items, getItems }) => {
+const Cards = (props) => {
+    const [memes, setMemes] = useState([]);
+    const [hasError, setErrors] = useState(false);
+
+    async function fetchData() {
+        const url = "https://proyecto-extra-rolling.herokuapp.com/api/items/";
+        const res = await fetch(url);
+        console.log(res);
+        res
+            .json()
+            .then((res) => setMemes(res))
+            .catch((err) => console.log("err" + err));
+            console.log(hasError);
+            console.log(memes);
+    }
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
-        <Container>
-            <Row>
-                {items.map((item) => {
-                    <Col key={item._id}>
-                        <Card style={{ width: "18rem" }}>
-                            <Link to={"/meme/" + item._id}>
-                                <Card.Img variant="top" src={getItems(items.Link)} />
-                                <Card.Body>
-                                    <Card.Title className="text-dark">{item.itemName}</Card.Title>
-                                    <Button variant="danger"> Ir al meme</Button>
-                                </Card.Body>
-                            </Link>
-                        </Card>
-                    </Col>
-                }
-                )
-                }
-            </Row>
-        </Container>
+
+        
+    <Container>
+            <div>
+                {memes.map(meme => (
+                   
+                        <ul key={meme._id}>
+                             
+                        <h3>{meme.itemName}</h3>   
+                        <h3>{meme.itemLink}</h3> 
+                        <h3>{meme.itemCommentary}</h3> 
+                        </ul>
+                ))
+                }               
+            </div>
+        
+       </Container>
     );
 };
 
